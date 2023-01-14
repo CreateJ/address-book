@@ -1,0 +1,41 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/login/login",
+    "pages/register/register",
+    "pages/more/more"
+  ],
+  "usingComponents": {
+    "van-button": "wxcomponents/vant/button/index",
+    "van-picker": "wxcomponents/vant/picker/index",
+    "van-icon": "wxcomponents/vant/icon/index",
+    "van-field": "wxcomponents/vant/field/index",
+    "van-cell-group": "wxcomponents/vant/cell-group/index"
+  },
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "东里义教通讯录",
+    "navigationBarBackgroundColor": "#F8F8F8",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#3cc51f",
+    "borderStyle": "black",
+    "backgroundColor": "#ffffff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/logo.png",
+        "selectedIconPath": "static/logo.png",
+        "text": "通讯录"
+      },
+      {
+        "pagePath": "pages/more/more",
+        "iconPath": "static/logo.png",
+        "selectedIconPath": "static/logo.png",
+        "text": "更多"
+      }
+    ]
+  }
+}
