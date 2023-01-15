@@ -5,72 +5,77 @@
         class="search"
         title-width="40"
         label="搜索"
-        :value="name"
+        :value="params.name"
         placeholder="请输入联系人姓名"
         @change="changeSearchText"
+        clearable
       />
     </div>
     <div class="picker-box box">
-      <van-picker :visible-item-count="3" :columns="gradeOptions"></van-picker>
+      <van-picker @change="changeYear" :visible-item-count="3" :columns="store.state.gradeOptions"></van-picker>
     </div>
-    <div class="user-list box">
-      <div class="user" v-for="(user, keyIndex) in 20" :key="keyIndex">
+    <scroll-view scroll-y="true" class="scroll-user-list" @scrolltolower="query">
+      <div class="empty">等待审核通过即可查看通讯录</div>
+      <div class="user" v-for="user in table" :key="user.id">
         <div class="avatar-box">
           <img class="avatar" src="~@/static/logo.png" alt="">
         </div>
-        <div class="name">张三</div>
+        <div class="name">{{ user.name }}</div>
       </div>
-    </div>
+    </scroll-view>
   </div>
 </template>
 
 <script setup>
 import { ref } from "vue"
-import { onLoad } from "@dcloudio/uni-app"
-import { debounce } from "lodash"
-import dayjs from "dayjs"
+import { onLoad, onShow } from "@dcloudio/uni-app"
+import { useStore } from "vuex"
+import api from "@/common/api"
 
-const name = ref('')
+const store = useStore()
+console.log('store', store)
+
+
+const table = ref([])
+
 onLoad(() => {
-  console.log('onload')
-})
-const changeSearchText = (e) => {
-  getList(e)
-}
-const getList = debounce((e) => {
-  console.log('获取list', 'name', e.detail)
-}, 500)
+  this.$store.dispatch('getMyInfo')
 
-const numberList = '十一二三四五六七八九'.split('')
-const transNumber = (year) => {
-  if (year <= 2013) return ''
-  const left = year - 2013
-  let res = ''
-  if (left < 10) {
-    res = numberList[left]
-  } else if (left === 10) {
-    res = numberList[0]
-  } else if (left % 10 === 0) {
-    res = numberList[left / 10] + numberList[0]
-  } else if (left < 20) {
-    const tempArr = (left + '').split('')
-    res = `${numberList[0]}${numberList[tempArr[1]]}`
-  } else {
-    const tempArr = (left + '').split('')
-    res = `${numberList[tempArr[0]]}${numberList[0]}${numberList[tempArr[1]]}`
-  }
-  return res
+})
+onShow(() => {
+  reset()
+})
+
+const reset = () => {
+  params.page = 0
+  table.value = []
+  query()
 }
-let gradeOptions = []
-const generateGradeOptions = () => {
-  console.log(dayjs().year())
-  const currentYear = dayjs().year()
-  for (let i = 2014; i <= currentYear; i++) {
-    gradeOptions.push(`${i}年第${transNumber(i)}届`)
-  }
-  console.log(gradeOptions)
+const params = {
+  enter_year: 2014,
+  page: 0,
+  page_size: 10,
+  name: ''
 }
-generateGradeOptions()
+
+const query = () => {
+  params.page++
+  api.commonApi.getUserList(params).then(res => {
+    if (res.user_list && res.user_list.length) {
+      table.value.push(...res.user_list)
+    }
+  })
+}
+const changeYear = (e) => {
+  params.enter_year = parseInt(e.detail.value)
+  reset()
+}
+
+const changeSearchText = (e) => {
+  params.name = e.detail
+  reset()
+}
+
 </script>
 
 <style lang="scss" scoped>
@@ -83,7 +88,6 @@ generateGradeOptions()
   overflow: hidden;
 
   .box {
-    border: 2rpx solid grey;
     border-radius: 20rpx;
     margin-top: 20rpx
   }
@@ -92,6 +96,20 @@ generateGradeOptions()
     display: flex;
     align-items: center;
     padding: 6rpx;
+    background: #00BAAD;
+    border: none;
+
+    ::v-deep.van-cell {
+      background: #00BAAD;
+
+      .van-field__label {
+        color: white;
+      }
+
+      &::after {
+        display: none
+      }
+    }
 
     .search {
       width: 100%;
@@ -100,40 +118,71 @@ generateGradeOptions()
 
   .picker-box {
     padding: 10rpx;
+    background: #FF5733;
+    border: none;
+
+    ::v-deep.van-picker {
+      background: #FF5733;
+
+      .van-picker__mask {
+        background: none;
+      }
+
+      .van-picker-column__item.van-picker-column__item--selected {
+        color: white;
+      }
+
+      .van-picker-column__item {
+        color: #A6A6A6;
+      }
+    }
   }
 
-  .user-list {
-    flex: 1;
-    padding: 20rpx;
-    overflow: auto;
-    margin-bottom: 20rpx;
+  .user {
+    border-radius: 10rpx;
+    margin: 20rpx 10rpx;
+    display: flex;
+    align-items: center;
+    padding: 10rpx;
+    box-shadow: 0px -4rpx 4rpx 0px #0000001b, 0px 4rpx 4rpx 0px #0000001b;
 
-    .user {
-      border: 2rpx solid grey;
-      border-radius: 10rpx;
-      margin-top: 20rpx;
+
+    &:last-child {
+      margin-bottom: 30rpx;
+    }
+
+    .avatar-box {
+      width: 45%;
+
+      .avatar {
+        height: 80rpx;
+        width: 80rpx;
+        border-radius: 40rpx;
+        float: right;
+      }
+    }
+
+    .name {
+      flex: 1;
+      padding-left: 20rpx;
+    }
+  }
+
+  .scroll-user-list {
+    flex: 1;
+    overflow: auto;
+    padding: 20rpx;
+    margin-top: 20rpx;
+    margin-bottom: 20rpx;
+    box-shadow: 0px -1.92px 1.92px 0px #0000001b, 0px 1.92px 1.92px 0px #0000001b;
+    border-radius: 20rpx;
+
+    .empty {
+      height: 100%;
       display: flex;
       align-items: center;
-      padding: 10rpx;
-
-      &:first-child {
-        margin-top: 0;
-      }
-
-      .avatar-box {
-        width: 45%;
-        .avatar {
-          height: 80rpx;
-          width: 80rpx;
-          border-radius: 40rpx;
-          float: right;
-        }
-      }
-
-      .name {
-        flex: 1;
-        padding-left: 20rpx;
-      }
+      justify-content: center;
+      color: grey
     }
   }
 

@@ -1,4 +1,6 @@
 {
   "navigationBarTitleText": "登录",
-  "usingComponents": {}
+  "usingComponents": {
+    "my-big-button": "../../components/my-big-button/my-big-button"
+  }
 }

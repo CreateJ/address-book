@@ -10,7 +10,9 @@
     "van-picker": "wxcomponents/vant/picker/index",
     "van-icon": "wxcomponents/vant/icon/index",
     "van-field": "wxcomponents/vant/field/index",
-    "van-cell-group": "wxcomponents/vant/cell-group/index"
+    "van-cell-group": "wxcomponents/vant/cell-group/index",
+    "van-cell": "wxcomponents/vant/cell/index",
+    "van-popup": "wxcomponents/vant/popup/index"
   },
   "window": {
     "navigationBarTextStyle": "black",
@@ -20,20 +22,20 @@
   },
   "tabBar": {
     "color": "#7A7E83",
-    "selectedColor": "#3cc51f",
+    "selectedColor": "#000",
     "borderStyle": "black",
     "backgroundColor": "#ffffff",
     "list": [
       {
         "pagePath": "pages/index/index",
-        "iconPath": "static/logo.png",
-        "selectedIconPath": "static/logo.png",
+        "iconPath": "static/icon-address.png",
+        "selectedIconPath": "static/icon-address-active.png",
         "text": "通讯录"
       },
       {
         "pagePath": "pages/more/more",
-        "iconPath": "static/logo.png",
-        "selectedIconPath": "static/logo.png",
+        "iconPath": "static/icon-more.png",
+        "selectedIconPath": "static/icon-more-active.png",
         "text": "更多"
       }
     ]

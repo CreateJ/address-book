@@ -1,5 +1,10 @@
 <script>
+import dayjs from "dayjs"
+
 export default {
+  created() {
+    this.$store.commit('initGradeOptions')
+  },
   onLaunch: function () {
     console.log('App Launch')
   },
@@ -9,6 +14,9 @@ export default {
   onHide: function () {
     console.log('App Hide')
   },
+  methods: {
+
+  }
 }
 </script>
 
