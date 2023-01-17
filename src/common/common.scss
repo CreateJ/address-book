@@ -1,3 +1,10 @@
 :not(not), :not(not)::before, :not(not)::after {
   box-sizing: border-box;
 }
+
+.my-panel {
+  padding: 20rpx;
+  border-radius: 20rpx;
+  margin: 20rpx;
+  box-shadow: 0px -4rpx 4rpx 0px #0000001b, 0px 4rpx 4rpx 0px #0000001b;
+}

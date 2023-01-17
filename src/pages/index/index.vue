@@ -39,7 +39,7 @@ console.log('store', store)
 const table = ref([])
 
 onLoad(() => {
-  this.$store.dispatch('getMyInfo')
+  store.dispatch('getMyInfo')
 
 })
 onShow(() => {

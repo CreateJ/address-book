@@ -24,6 +24,30 @@
             "style": {
                 "navigationBarTitleText": "更多"
             }
+        },
+        {
+            "path": "pages/more/mine",
+            "style": {
+                "navigationBarTitleText": "我的信息"
+            }
+        },
+        {
+            "path": "pages/more/proposal",
+            "style": {
+                "navigationBarTitleText": "意见反馈"
+            }
+        },
+        {
+            "path": "pages/more/introduction",
+            "style": {
+                "navigationBarTitleText": "介绍"
+            }
+        },
+        {
+            "path": "pages/more/about",
+            "style": {
+                "navigationBarTitleText": "关于小程序"
+            }
         }
     ],
     "tabBar": {
