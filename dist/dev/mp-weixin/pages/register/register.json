@@ -1,6 +1,0 @@
-{
-  "navigationBarTitleText": "申请验证",
-  "usingComponents": {
-    "my-big-button": "../../components/my-big-button/my-big-button"
-  }
-}
