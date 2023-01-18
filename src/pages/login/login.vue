@@ -41,8 +41,8 @@ import api from "@/common/api"
 import utils from "@/common/utils"
 
 const form = reactive({
-  phone: '13312345678',
-  password: '12345678'
+  phone: '13924771913',
+  password: '201713924771913'
 })
 const onChange = (val) => {
   console.log(val)

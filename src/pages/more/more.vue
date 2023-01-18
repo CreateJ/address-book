@@ -86,7 +86,7 @@ const linkTo = (link) => {
       color: white;
 
       .welcome-text {
-        margin-top: 20rpx
+        margin-top: 10rpx
       }
     }
   }

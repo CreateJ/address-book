@@ -8,6 +8,18 @@ export default {
       api.commonApi.getUser(userId)().then(res => {
         console.log(res)
         commit('setMyInfo', res)
+      }).catch(err => {
+        console.log(e)
+        uni.navigateTo({
+          url: '/pages/login/login',
+          success: () => {
+            utils.useToast('登录过期，请重新登录', { icon: 'none' })
+          }
+        })
+      })
+    } else {
+      uni.navigateTo({
+        url: '/pages/login/login'
       })
     }
   }

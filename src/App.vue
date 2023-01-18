@@ -4,6 +4,7 @@ import dayjs from "dayjs"
 export default {
   created() {
     this.$store.commit('initGradeOptions')
+    this.$store.dispatch('getMyInfo')
   },
   onLaunch: function () {
     console.log('App Launch')

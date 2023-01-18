@@ -15,7 +15,7 @@
       <van-picker @change="changeYear" :visible-item-count="3" :columns="store.state.gradeOptions"></van-picker>
     </div>
     <scroll-view scroll-y="true" class="scroll-user-list" @scrolltolower="query">
-      <div class="empty">等待审核通过即可查看通讯录</div>
+      <div class="empty" v-if="!table.length">暂无数据或无权限</div>
       <div class="user" v-for="user in table" :key="user.id">
         <div class="avatar-box">
           <img class="avatar" src="~@/static/logo.png" alt="">
@@ -31,6 +31,8 @@ import { ref } from "vue"
 import { onLoad, onShow } from "@dcloudio/uni-app"
 import { useStore } from "vuex"
 import api from "@/common/api"
+import utils from "@/common/utils"
+import { debounce } from "lodash"
 
 const store = useStore()
 console.log('store', store)
@@ -38,10 +40,6 @@ console.log('store', store)
 
 const table = ref([])
 
-onLoad(() => {
-  store.dispatch('getMyInfo')
-
-})
 onShow(() => {
   reset()
 })
@@ -49,7 +47,8 @@ onShow(() => {
 const reset = () => {
   params.page = 0
   table.value = []
-  query()
+  const userId = utils.getStorageSync('userId')
+  userId && query()
 }
 const params = {
   enter_year: 2014,
@@ -73,7 +72,8 @@ const changeYear = (e) => {
 
 const changeSearchText = (e) => {
   params.name = e.detail
-  reset()
+  console.log(params.name)
+  debounce(reset, 1)
 }
 
 </script>
