@@ -7,7 +7,7 @@ export default {
     if (userId) {
       api.commonApi.getUser(userId)().then(res => {
         console.log(res)
-        commit('setMyInfo', res)
+        commit('setMyInfo', res.user_info)
       }).catch(err => {
         console.log(e)
         uni.navigateTo({
